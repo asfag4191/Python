@@ -19,7 +19,7 @@ if __name__ == '__main__':
     test_cross_sum()
 
 #Igjen bruker man while-løkker
-def nth_cross_sum(n,x):
+#def nth_cross_sum(n,x):
 
 
 

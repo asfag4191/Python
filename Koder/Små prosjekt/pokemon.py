@@ -10,6 +10,7 @@ pokemon_choices={
 
 user_pokemon = str(input('Choose your Pokémon (Pikachu, Charmander, Bulbasaur, Squirtle): ').lower())
 
+
 if user_pokemon in pokemon_choices: 
     user_stats=pokemon_choices[user_pokemon] #looks up the value (stats dictionary) for the key user_pokemon. Stores the stats.
     print(f'You choose {user_pokemon} with {user_stats}')

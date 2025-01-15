@@ -1,3 +1,4 @@
+#String til liste med tall
 def compress(raw_binary):
     count=1
     count_list=[]
@@ -28,3 +29,29 @@ def test_compress():
 
 if __name__ == '__main__':
     test_compress()
+
+#DelB
+#Liste til string
+def decompress(compressed_binary):
+    compressed_string='' #legger til resultatet
+
+    for i in range(len(compressed_binary)): #iterer over lengden til listen, inkludere alle tallene.
+        n=compressed_binary[i]
+        if i % 2==0:
+            compressed_string+=("0"*n)
+        else:
+            compressed_string+=("1"*n)
+    return compressed_string
+
+print(decompress([2, 3, 4, 4]))
+
+def test_decompress():
+    print('Tester decompress... ', end='')
+    assert('0011100001111' == decompress([2, 3, 4, 4]))
+    assert('110111111110' == decompress([0, 2, 1, 8, 1]))
+    assert('0000' == decompress([4]))
+    print('OK')
+
+if __name__ == '__main__':
+    test_decompress()
+

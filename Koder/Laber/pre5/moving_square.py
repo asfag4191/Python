@@ -14,12 +14,18 @@ def key_pressed(app, event):
         app.dx = -4
     elif event.key == "Right":
         app.dx = 4
+    elif event.key == "d":
+        app.debug_mode = not app.debug_mode #her endres app.debug_mode, (True -> False, eller False -> True)
+    elif app.debug_mode and event.key == "Space":
+        do_step(app) # Kjører kun hvis app.debug_mode er True og Space trykkes
 
 
 def timer_fired(app):
     # Denne funksjonen kalles periodisk av selve uib_inf100_graphics
     # -rammeverket. Hvor ofte bestemmes av verdien i app.timer_delay.
-    do_step(app)
+    if not app.debug_mode: #sjekker om debug_mode er false, altså av da kalles det som er inne i if-setningen.
+        do_step(app) #kalles do step når den er av
+
 
 def do_step(app):
     # Flytt horisontalt

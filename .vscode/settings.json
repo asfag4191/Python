@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./Koder/Laber/lab7/ ",
+        "./Koder/Laber/lab7/ "
+    ]
+}

@@ -1,4 +1,4 @@
-from leapyear import is_leap_year
+from .leapyear import is_leap_year
 
 print('Testing is_leap_year...', end=' ')
 assert is_leap_year(2026) is False

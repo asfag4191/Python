@@ -1,3 +1,3 @@
-husnummer=int(input("Husnummer: "))
+husnummer=int(input("Husnummer:\n"))
 busstopp=(round(husnummer/7))*7
-print(f'Det nærmeste busstoppet er ved nummer {busstopp}')
+print(f'Nærmeste busstopp er ved nummer {busstopp}')

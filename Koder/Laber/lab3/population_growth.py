@@ -5,9 +5,9 @@
 
 #Definerer funksjonen
 def population_growth(population, growth_rate, years): 
-    print(f'Befolkning{population}')
-    print(f'Årlig vekstrate (i prosent){growth_rate}')
-    print(f'Antall år {years}')
+    print(f'Befolkning: {population}')
+    print(f'Årlig vekstrate (i prosent): {growth_rate}')
+    print(f'Antall år: {years}')
     start_population=population #start populasjonen
     growth_rate=growth_rate/100 
     for i in range(1,years+1):
@@ -17,14 +17,15 @@ def population_growth(population, growth_rate, years):
     #Regner ut totalveksten
     final_growth=round(((population-start_population)/start_population)*100,2) #round for å få 2 desimaler
     print(f'Total vekst etter {years} år er (i prosent) {final_growth}')
-    return population, final_growth,
+    return final_growth,
 
 #Hovedprogrammet, sikrer at koden kun kjøres direkte (kan ikke importeres som en modul)
 if __name__ == '__main__':
-    population=int(input('Nåværende befolkning: '))
-    growth_rate=float(input('Vekstrate: '))
-    years=int(input('Antall år: '))
-    population, final_growth= population_growth(population, growth_rate, years) #kaller på funksjonen
+    population = int(input('Befolkning: '))
+    growth_rate = float(input('Årlig vekstrate (i prosent): '))
+    years = int(input('Antall år: '))
+    
+    population_growth(population, growth_rate, years) #kaller funksjonen
 
     
 

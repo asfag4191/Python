@@ -1,6 +1,6 @@
 def draw_board(canvas, x1,y1,x2,y2,board,info_mode):
-    rows=len(board) #antall rader
-    cols=len(board[0]) #antall kolonner basert på første raden
+    rows=len(board) 
+    cols=len(board[0])
 
     total_width= x2-x1
     cell_width=total_width/cols
@@ -8,21 +8,16 @@ def draw_board(canvas, x1,y1,x2,y2,board,info_mode):
     total_height= y2-y1
     cell_height=total_height/rows
 
-    
-    #Hver celle (row,column) tegnes en etter en. 
-    for row in range(rows): #håndterer rader
-        for col in range (cols): #håndterer kolonner
-            #Tegn en celle
-            #venstre og høyre kant
-            #col er hvilken kolonne man befinner oss i
+     
+    for row in range(rows):
+        for col in range (cols): 
             x_left=x1+col*cell_width
             x_right=x_left+cell_width
-            #Topp og bunn
             y_top=y1+row*cell_height
             y_bottom=y_top+cell_height
 
-            value=board[row][col]
-            color = get_color(value)
+            value=board[row][col] 
+            color = get_color(value) 
 
             canvas.create_rectangle(x_left, y_top, x_right, y_bottom, fill=color)
 
@@ -33,7 +28,6 @@ def draw_board(canvas, x1,y1,x2,y2,board,info_mode):
                 canvas.create_text(cell_mid_x, cell_mid_y, text=text)
 
 
-#fargene bestemmes på fargene i brettet
 def get_color(value): 
     if value==0:
         return 'lightgray'

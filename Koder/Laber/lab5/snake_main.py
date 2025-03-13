@@ -1,15 +1,12 @@
-from snake_view import draw_board
-import random
+from snake_view import draw_board 
+import random 
 
 def app_started(app):
-    # Modellen.
-    # Denne funksjonen kalles én gang ved programmets oppstart.
-    # Her skal vi __opprette__ variabler i som behøves i app.
+    app.state='start'
     app.direction='east'
     app.info_mode=True
     app.snake_size=3
     app.head_pos=(3,4)
-    app.state='active'
     app.timer_delay = 200
     app.board=[
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -22,15 +19,20 @@ def app_started(app):
 ]
 
 def timer_fired(app):
-    # Funksjonen kan __endre på__ eksisterende variabler i app.
-    if not app.info_mode and app.state=='active':
-        move_snake(app)
+    if app.state == 'active':
+        if not app.info_mode:
+            move_snake(app)
 
 def key_pressed(app, event):
-    # En kontroller.
-    # Denne funksjonen kalles hver gang brukeren trykker på tastaturet.
-    if event.key=='i':
-        app.info_mode=not app.info_mode
+    if app.state == 'start':
+        if event.key.lower() == 'p':
+            app.state = 'active'
+        return 
+
+    if event.key == 'i':
+        app.info_mode = not app.info_mode
+    elif event.key == 'Space':
+        move_snake(app)
     
     if app.state=='active':
         if event.key=='Up':
@@ -41,28 +43,58 @@ def key_pressed(app, event):
             app.direction='west'
         elif event.key=='Right':
             app.direction='east'
-        elif event.key=='Space':
-            move_snake(app)
-
 
 def redraw_all(app, canvas):
-    # Visningen.
-    # Denne funksjonen tegner vinduet. Funksjonen kalles hver gang
-    # modellen har endret seg, eller vinduet har forandret størrelse.
-    # Funksjonen kan __lese__ variabler fra app, men har ikke lov til
-    # å endre på dem.
-    if app.info_mode:
+    if app.state == 'start':
         canvas.create_text(
-        app.width // 2, 10,  #midten, altså deler bredden på 2
-        text=f'{app.head_pos=} {app.snake_size=} {app.direction=} {app.state=}', 
-        font='Arial 14', 
-        fill='black', 
-    )
-        
-    if app.state=='active':
-        draw_board(canvas,25,25,app.width-25,app.height-25,app.board,app.info_mode)
-    if app.state=="gameover":
-        canvas.create_text(app.width / 2, app.height / 2, text="Game Over", font=("Helvetica", 24), fill="red")
+            app.width / 2, app.height / 2 - 50,
+            text="Snake",
+            font="Arial 36",
+            fill="black"
+        )
+        canvas.create_text(
+            app.width / 2, app.height / 2,
+            text="Press 'P' to Play,'i' to turn of info modus.",
+            font="Arial 24",
+            fill="black"
+        )
+        canvas.create_text(
+            app.width / 2, app.height / 2 + 50,
+            text="Control the hungry snake and catch apples.",
+            font="Arial 16",
+            fill="gray"
+        )
+
+        canvas.create_text(
+            app.width / 2, app.height / 2 + 70,
+            text="Use arrow keys to change direction.",
+            font="Arial 16",
+            fill="gray"
+        )
+
+        canvas.create_text(
+            app.width / 2, app.height / 2 + 90,
+            text="If you press space when active, you can move faster!",
+            font="Arial 16",
+            fill="gray"
+        )
+
+    elif app.state == 'active':
+        draw_board(canvas, 25, 25, app.width - 25, app.height - 25, app.board, app.info_mode)
+        if app.info_mode:
+            canvas.create_text(
+                app.width // 2, 10,
+                text=f'{app.head_pos=} {app.snake_size=} {app.direction=} {app.state=}',
+                font='Arial 14',
+                fill='black'
+            )
+    elif app.state == "gameover":
+        canvas.create_text(
+            app.width / 2, app.height / 2,
+            text="Game Over",
+            font=("Helvetica", 24),
+            fill="red"
+        )
     
 def move_snake(app):
     app.head_pos=get_next_head_position(app.head_pos, app.direction)
@@ -70,17 +102,12 @@ def move_snake(app):
 
     if not is_legal_move(app.head_pos, app.board):
         app.state="gameover"
-        return 
+        return
 
 
     if app.board [new_row][new_col]== -1:
         app.snake_size +=1
-        
         app.board [new_row][new_col] = app.snake_size
-        
-        row, col =app.head_pos
-        app.board [row][col]=0
-        
         add_apple_at_random_location(app.board)
 
     else:
@@ -90,7 +117,7 @@ def move_snake(app):
 
 
 def get_next_head_position(head_pos, direction):
-    row, col = head_pos  # Nåværende posisjon (rad, kolonne)
+    row, col = head_pos  
     
     if direction == 'east':
         new_row, new_col= row, col + 1
